@@ -1,44 +1,94 @@
-import {getInput} from '@actions/core'
-import * as github from '@actions/github'
+import {debug} from '@actions/core'
+import {Context as GithubContext} from '@actions/github/lib/context'
+import {InputInfo} from './input-info'
 
-// eslint-disable-next-line no-shadow
-const enum EventName {
-  ISSUES = 'issues',
-  PULL_REQUEST = 'pull_request'
+const enum SenderType {
+  USER = 'User',
+  BOT = 'Bot'
 }
 
-// eslint-disable-next-line no-shadow
-const enum EventType {
-  OPENED = 'opened'
+const enum EventName {
+  ISSUES = 'issues',
+  PULL_REQUEST = 'pull_request',
+  PULL_REQUEST_TARGET = 'pull_request_target',
+  PING = 'ping'
 }
 
 class Context {
+  githubContext: GithubContext
   githubEventPath: string
   token: string
   owner: string
   repo: string
   sha: string
+  senderType?: SenderType
   eventName: EventName
-  eventType?: EventType
-  eventNumber?: number
+  eventType?: string
+  eventNumber: number
+  isDisableBot: boolean
   configFilePath: string
 
-  constructor() {
-    this.githubEventPath = process.env['GITHUB_EVENT_PATH'] as string
-    this.token = getInput('token', {required: true})
-    this.owner = github.context.repo.owner
-    this.repo = github.context.repo.repo
-    this.sha = github.context.sha
-    this.eventName = github.context.eventName as EventName
-    this.configFilePath = `.github/${getInput('config-file-name')}`
+  constructor(inputInfo: InputInfo, githubContext: GithubContext) {
+    this.githubContext = githubContext
+    this.githubEventPath = inputInfo.githubEventPath
+    this.token = inputInfo.token
+    this.owner = githubContext.repo.owner
+    this.repo = githubContext.repo.repo
+    this.sha = githubContext.sha
+    this.eventName = githubContext.eventName as EventName
+    this.isDisableBot = inputInfo.disableBot
+    this.configFilePath = `.github/${inputInfo.configFileName}`
 
-    if (github.context.payload.issue != null) {
-      this.eventNumber = github.context.payload.issue.number
-    } else if (github.context.payload.pull_request != null) {
-      this.eventNumber = github.context.payload.pull_request.number
+    this.senderType = githubContext.payload.sender?.type as SenderType
+    if (githubContext.payload.issue != null) {
+      this.eventNumber = githubContext.payload.issue.number
+    } else if (githubContext.payload.pull_request != null) {
+      this.eventNumber = githubContext.payload.pull_request.number
+    } else {
+      throw new Error('The payload must be an issue or pull_request value')
     }
-    this.eventType = github.context.payload.action as EventType
+    this.eventType = githubContext.payload.action
+
+    debug('== Github Context ==')
+    this.printGithubContext()
+    debug('== Service Context ==')
+    this.printServiceContext()
+  }
+
+  private printGithubContext(): void {
+    debug(`context.eventName = ${this.githubContext.eventName}`)
+    // debug(`context.sha = ${this.githubContext.sha}`)
+    debug(`context.ref = ${this.githubContext.ref}`)
+    debug(`context.workflow = ${this.githubContext.workflow}`)
+    debug(`context.action = ${this.githubContext.action}`)
+    debug(`context.actor = ${this.githubContext.actor}`)
+    debug(`context.job = ${this.githubContext.job}`)
+    debug(`context.runNumber = ${this.githubContext.runNumber}`)
+    debug(`context.runId = ${this.githubContext.runId}`)
+    debug(`context.apiUrl = ${this.githubContext.apiUrl}`)
+    debug(`context.serverUrl = ${this.githubContext.serverUrl}`)
+    debug(`context.graphqlUrl = ${this.githubContext.graphqlUrl}`)
+
+    debug(`payload.action = ${this.githubContext.payload.action}`)
+    debug(`payload.issue.number = ${this.githubContext.payload.issue?.number}`)
+    debug(
+      `payload.pull_request.number = ${this.githubContext.payload.pull_request?.number}`
+    )
+  }
+
+  private printServiceContext(): void {
+    debug(`githubEventPath = ${this.githubEventPath}`)
+    debug(`token = ${this.token}`)
+    debug(`owner = ${this.owner}`)
+    debug(`repo = ${this.repo}`)
+    // debug(`sha = ${this.sha}`)
+    debug(`senderType = ${this.senderType}`)
+    debug(`eventName = ${this.eventName}`)
+    debug(`eventType = ${this.eventType}`)
+    debug(`eventNumber = ${this.eventNumber}`)
+    debug(`isDisableBot = ${this.isDisableBot}`)
+    debug(`configFilePath = ${this.configFilePath}`)
   }
 }
 
-export {Context, EventName, EventType}
+export {Context, SenderType, EventName}

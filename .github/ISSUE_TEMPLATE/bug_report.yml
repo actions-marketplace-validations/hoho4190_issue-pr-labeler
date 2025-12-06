@@ -1,10 +1,10 @@
-name: Bug Report
+name: "\U0001F41B Bug Report"
 description: Create a report to help us improve
-title: "[Bug]"
-labels: ["bug"]
+title: '[Bug] '
+labels:
+  - bug
 assignees:
   - hoho4190
-
 body:
   - type: checkboxes
     id: prerequisites
@@ -18,24 +18,29 @@ body:
           required: true
         - label: I'm reporting the issue to the correct repository (for multi-repository projects)
           required: true
-
   - type: dropdown
     id: version
     attributes:
       label: Version
       description: What version did that bug occur in?
       options:
+        - v2.0.1
+        - v2.0.0
+        - v1.3.3
+        - v1.3.2
+        - v1.3.1
+        - v1.3.0
+        - v1.2.0
+        - v1.1.0
         - v1.0.0
     validations:
       required: true
-
   - type: textarea
-    id: context
+    id: bug-description
     attributes:
       label: Description
     validations:
       required: true
-      
   - type: textarea
     id: expected-behavior
     attributes:
@@ -43,7 +48,6 @@ body:
       description: Please describe the behavior you are expecting.
     validations:
       required: false
-
   - type: textarea
     id: current-behavior
     attributes:
@@ -51,7 +55,6 @@ body:
       description: What is the current behavior?
     validations:
       required: false
-
   - type: textarea
     id: failure-information
     attributes:
@@ -59,19 +62,14 @@ body:
       description: Please help provide information about the failure if this is a bug.
     validations:
       required: false
-
   - type: textarea
     id: steps-to-reproduce
     attributes:
       label: Steps to Reproduce
       description: Please provide detailed steps for reproducing the issue.
-      placeholder: |
-        1. step 1 
-        2. step 2
-        3. you get it...
+      placeholder: "1. step 1 \n2. step 2\n3. you get it...\n"
     validations:
       required: false
-
   - type: textarea
     id: failure-logs
     attributes:

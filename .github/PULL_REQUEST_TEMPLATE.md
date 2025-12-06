@@ -1,47 +1,92 @@
-## Description
+## Summary
 
-Please include a summary of the change and which issue is fixed.
+<!--
+Briefly explain the purpose of this PR and what it addresses.
+-->
 
-Please also include relevant motivation and context. 
-
-List any dependencies that are required for this change.
-
+This PR [brief description of what this PR does].
 
 #### Related issues
-issues: #NUM, #NUM, ...
 
+<!--
+Use "Fixes #123" to auto-close the issue when this PR is merged.
+Use "Related to #123" if this PR is connected but does not close the issue.
+
+Examples:
+- Fixes #NUM
+- Fixes #NUM
+- Related to #NUM
+-->
+
+## Changes
+
+<!--
+List the key changes in this PR.
+Use bullet points to improve readability.
+
+Examples:
+- Added user authentication service
+- Updated API documentation
+- Fixed memory leak in data processor
+-->
 
 ## Type of change
 
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Refactoring (no functional changes, no api changes)
-- [ ] Test (adding missing tests, correcting existing tests)
-- [ ] Code style update (typo, formatting, local variables)
-- [ ] Build related changes
-- [ ] CI related changes
-- [ ] Documentation content changes
-- [ ] Release new version
+<!--
+Select all types that apply to this PR.
+-->
 
+- [ ] ✨ New feature
+- [ ] 🐛 Bug fix
+- [ ] ♻️ Refactoring (no functional or API changes)
+- [ ] 🧪 Test (add or fix tests)
+- [ ] 🎨 Code style (formatting, comments, naming)
+- [ ] 🏗️ Build-related changes
+- [ ] ⚙️ CI/CD changes
+- [ ] 🧹 Chore (cleanup, misc.)
+- [ ] 📚 Documentation changes
 
-## Whether Braking Changes
-Does this PR contain breaking changes?
+## Breaking Changes
 
-- [ ] Yes
-- [ ] NO
+<!--
+Does this PR introduce breaking changes to the API or behavior?
+Check "Yes" only if existing users must change their usage.
+-->
 
+> If **yes**, explain what breaks and what users need to know.
 
-## Checklist before merge
+- [ ] Yes - breaking change
+- [ ] No
 
-- N/A
+## Testing
 
+<!--
+Please check all applicable boxes.
+-->
 
-#### Checklist before release branch merge
-**IF NOT RELEVANT, DELETE THIS SECTION**
-- [ ] Update version - package.json, package-lock.json
-- [ ] Add version - issue templates
+- [ ] Added tests for new functionality.
+- [ ] Verified that existing tests pass after changes to existing functionality.
+- [ ] Improved test coverage or updated existing tests.
+- [ ] N/A – this change does not require tests.
 
+## Pre-Merge Checklist
 
-## Checklist after merge
+<!--
+Tasks that must be completed before merging.
 
-- N/A
+Examples:
+- [ ] Documentation updated
+- [ ] Changelog updated
+-->
+
+- [ ] `dist/` directory updated
+
+## Additional Notes
+
+<!--
+Optional: Add any context, screenshots, or discussion points for reviewers.
+-->
+
+N/A
+
+<!-- Created by: hoho4190 -->
